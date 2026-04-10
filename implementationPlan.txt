@@ -1,0 +1,61 @@
+MNIST Digit Recognition System Implementation Plan
+This document outlines the proposed implementation plan to satisfy the requirements for your Machine Learning Assignment 2 (Handwritten digit recognition).
+
+Goal Description
+We will develop a PyTorch-based Deep Learning pipeline to read the MNIST dataset, prepare custom train/val/test splits, construct multiple models (Feedforward and Convolutional), and conduct an extensive analysis on hyperparameter changes (learning rate, batch size, neurons, and network depth).
+
+The result will be a suite of Python scripts that automatically run these experiments, generate all required plots (loss/accuracy curves), build a confusion matrix, and output analytical insights.
+
+User Review Required
+CAUTION
+
+Dataset Source Strategy The requirement states explicitly: "Download the MNIST dataset from Kaggle". However, downloading datasets programmatically via Kaggle requires a Kaggle API token (kaggle.json) configured on your system.
+
+How would you like to handle this?
+
+Option 1: You manually download the dataset (e.g., from the Kaggle Digit Recognizer competition) into this directory, and I will write a custom PyTorch Dataset to read it via pandas.
+Option 2: We use the standard PyTorch torchvision.datasets.MNIST as an equivalent stand-in, saving time and bypassing Authentication. We will then merge its train/test sets and apply the train_test_split (60/20/20) as requested.
+Please let me know your preference!
+
+Proposed Changes
+We will create a modular Python project to keep the code clean, easily testable, and maintainable.
+
+Core Implementation Framework
+[NEW] data_loader.py
+Setup custom dataset loading logic depending on our dataset choice (Kaggle CSV or Torchvision).
+Apply scikit-learn train_test_split twice in a stratified manner to achieve 60% Training, 20% Validation, 20% Test.
+Create torch.utils.data.DataLoader instances for the splits.
+[NEW] models.py
+FNN Model: A customizable Feedforward Neural Network using PyTorch, accepting layer architectures dynamically to facilitate the layer/neurons analysis required in Step 4. Uses strictly ReLU activations.
+CNN Model (Bonus): A Convolutional Neural Network incorporating Convolutional layers, Max Pooling, Dropout, and Layer Normalization.
+[NEW] trainer.py
+Implement building blocks for the custom training loop.
+Track metrics using SGD optimizer and Cross-Entropy loss.
+Return training and validation accuracy/loss history for plotting.
+Analysis & Experiments Logic
+[NEW] utils.py
+Helper functions to plot Training & Validation metrics using matplotlib (saving them to plots/ directory).
+Helper function to generate and plot the Confusion Matrix using seaborn and sklearn.metrics.
+[NEW] main.py
+The core script orchestrating all experiments:
+Base Model Run (LR=0.01, Default batch, 2 Hidden layers)
+LR Analysis (4 distinct learning rates: e.g., 0.1, 0.05, 0.01, 0.001)
+Batch Size Analysis (4 batch sizes: e.g., 16, 32, 64, 128)
+Neurons Analysis (4 variations in neuron counts)
+Layer Count Analysis (e.g., 2, 3, 4, 5 hidden layers)
+Final Test Set Evaluation & Confusion Matrix.
+Bonus Base Model Run (CNN + LayerNorm + Dropout).
+A corresponding report.md will be generated with textual insights and metrics for each step.
+Open Questions
+Dataset: Which dataset option (Option 1 or Option 2, check "User Review Required") works best for you?
+Execution Context: This assignment requires running several repeated experiments from scratch. This can take several minutes to run, even on a CPU. Would you prefer me to make the epochs number configurable (e.g., 5-10 epochs for quick execution initially) so you can test it quickly before running a massive job for your complete report?
+Verification Plan
+Automated Run
+Once approved, I will run the implementation. Since this is purely data-scientific, verification will entail:
+
+Running python main.py with smaller epoch configs to ensure no crashes exist.
+Making sure all plots/*.png are generated correctly.
+Checking that a markdown report or log is formed with insights.
+Manual Verification
+You can inspect the code to ensure it satisfies all constraints.
+You can review the insights and plots to wrap up your assignment report.
