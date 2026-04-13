@@ -62,7 +62,7 @@ class BonusCNN(nn.Module):
             # BatchNorm depends on other images in the same batch
             # LayerNorm treats every image as a stand alone only 
             # cares about the pixels within that specific sample.
-            nn.LayerNorm([32, 28, 28]), # LayerNorm usage required by bonus
+            nn.LayerNorm([32, 28, 28]),
             # the Activation Function. 
             # It is the "gatekeeper" that decides which information is important 
             # enough to be passed to the next layer and which should be discarded.
