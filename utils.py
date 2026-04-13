@@ -1,18 +1,21 @@
 import matplotlib.pyplot as plt
+# seaborn-->statistical data visualization library
+# used to create heatmaps-->graphical representation of data
 import seaborn as sns
 import os
 from sklearn.metrics import confusion_matrix
 import numpy as np
 
-def plot_history(history, experiment_name, save_dir='plots'):
-    """
-    Plots training validation loss and accuracy line graphs to disk.
-    """
+def plot_history(history, experiment_name, save_dir='plots',epochs=5):
+    # creates a directory to save the plots
+    # exist_ok=True-->if the directory already exists, it will not raise an error
     os.makedirs(save_dir, exist_ok=True)
-    
-    epochs = range(1, len(history['train_loss']) + 1)
+
+    epochs = range(1, epochs + 1)
     
     # Plot Loss
+    #10-->width of the plot
+    #5-->height of the plot
     plt.figure(figsize=(10, 5))
     plt.plot(epochs, history['train_loss'], 'b-', label='Training Loss')
     plt.plot(epochs, history['val_loss'], 'r-', label='Validation Loss')
@@ -37,13 +40,16 @@ def plot_history(history, experiment_name, save_dir='plots'):
     plt.close()
 
 def plot_confusion_matrix(labels, preds, experiment_name, save_dir='plots'):
-    """
-    Computes and plots a confusion matrix of the model's predictions.
-    """
     os.makedirs(save_dir, exist_ok=True)
     
     cm = confusion_matrix(labels, preds)
     plt.figure(figsize=(10, 8))
+    # heatmap-->visualizes the confusion matrix
+    # annot=True-->show the values in the cells
+    # fmt='d'-->format the values as integers
+    # cmap='Blues'-->use the blues colormap
+    # xticklabels=np.arange(10)-->set the x-axis labels to 0-9
+    # yticklabels=np.arange(10)-->set the y-axis labels to 0-9
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
                 xticklabels=np.arange(10), yticklabels=np.arange(10))
     plt.title(f'Confusion Matrix - {experiment_name}')
