@@ -47,7 +47,7 @@ def run_experiment(name, model, train_loader, val_loader, test_loader, lr=0.01, 
     )
     
     plot_history(history, experiment_name=name)
-    
+    # evaluate_model--> evaluates the model on the test_loader
     test_acc, labels, preds = evaluate_model(trained_model, test_loader, device=device)
     print(f"Test Accuracy for {name}: {test_acc:.4f}")
     
