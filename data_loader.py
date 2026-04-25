@@ -33,7 +33,6 @@ def get_dataloaders(batch_size=64):
     
     # Combine both to get all images
     # torch.utils.data.ConcatDataset--> concatenates multiple datasets into a single dataset
-    #                                   without their targets
     concat_dataset = torch.utils.data.ConcatDataset([train_data, test_data])
     
     # Extract labels to allow stratified split

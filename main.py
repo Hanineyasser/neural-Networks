@@ -25,9 +25,9 @@ def run_experiment(name, model, train_loader, val_loader, test_loader, lr=0.01, 
     # model.parameters()--> returns an iterator over all the parameters
     #                       of the model that the optimizer will update
     # lr--> learning rate-->step size
-    # If lr is too high (e.g., 5.0), the optimizer violently turns the knobs, 
+    # If lr is too high (e.g., 5.0), the optimizer violently turns the weights, 
     # constantly overshooting the correct answer, and the model never learns.
-    # If lr is too tiny (e.g., 0.0000001), the optimizer barely turns the knobs 
+    # If lr is too tiny (e.g., 0.0000001), the optimizer barely turns the weights 
     # at all, and your model will take a very long time to train.
     # SGD --> Stochastic Gradient Descent
     # optim--> PyTorch's toolbox holding all of the Optimization algorithms
@@ -71,7 +71,7 @@ def main():
     torch.manual_seed(42)
     torch.cuda.manual_seed(42)
     train_loader, val_loader, test_loader = get_dataloaders(batch_size=base_batch_size)
-    
+    # dictionary to store the results
     results = {}
     
     # 1. Base Model

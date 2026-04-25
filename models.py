@@ -25,14 +25,15 @@ class FNN(nn.Module):
         # PyTorch automatically feeds the data through the first layer, 
         # takes the output, feeds it into the second layer, takes that output, 
         # feeds it into the third layer, and so on.
+        # * --> unpacks the list then pass the layers one by one
         self.network = nn.Sequential(*layers)
         
     def forward(self, x):
         # Flatten image
         # x.view(x.size(0), -1)--> flattens the input tensor x into a 1D vector
-        # so that it camn be fed into a fully connected layer
+        # so that it can be fed into a fully connected layer
         # x.size(0)--> number of samples in the batch-->batch_size
-        # by setting trhe 1st argument to batch_size we are telling PyTorch 
+        # by setting the 1st argument to batch_size we are telling PyTorch 
         # to keep the batch dimension and do not merge different samples together
         # -1--> automatically calculates the number of features
         # It multiplies all the other dimensions (like Width*Height*Channels) 
@@ -66,6 +67,7 @@ class BonusCNN(nn.Module):
             # the Activation Function. 
             # It is the "gatekeeper" that decides which information is important 
             # enough to be passed to the next layer and which should be discarded.
+            # makes the model non-linear --> allows the model to learn complex patterns
             nn.ReLU(),
             # downsampling layer
             # reduces the spatial dimensions of the feature maps
